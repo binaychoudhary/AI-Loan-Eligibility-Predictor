@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Loan Eligibility Predictor{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="{{ url_for('index') }}" class="brand">
+        <span class="brand-mark">LE</span>
+        <span class="brand-text">Loan Eligibility Predictor</span>
+      </a>
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' or request.endpoint == 'predict' else '' }}">Check Eligibility</a>
+        <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">Model Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Loan Eligibility Prediction Using Artificial Intelligence and Machine Learning &mdash; B.Tech CSE Minor Project</p>
+    <p class="footer-note">This tool is a decision-support aid based on a trained ML model and does not replace human underwriting judgement.</p>
+  </footer>
+</body>
+</html>

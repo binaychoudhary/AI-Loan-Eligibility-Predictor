@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Result &mdash; Loan Eligibility Predictor{% endblock %}
+
+{% block content %}
+<section class="result-hero {{ 'result-approved' if is_approved else 'result-rejected' }}">
+  <p class="result-tag">{{ 'Likely Approved' if is_approved else 'Likely Rejected' }}</p>
+  <h1>
+    {% if is_approved %}
+      This application looks eligible for the loan.
+    {% else %}
+      This application does not currently look eligible.
+    {% endif %}
+  </h1>
+  <p class="result-model">Predicted using: <strong>{{ model_name }}</strong></p>
+</section>
+
+<div class="card">
+  <h2>Applicant summary</h2>
+  <table class="summary-table">
+    <tbody>
+      {% for label, value in applicant_summary.items() %}
+      <tr>
+        <th>{{ label }}</th>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if not is_approved %}
+<div class="card note-card">
+  <h2>What could improve this outcome</h2>
+  <ul>
+    <li>A clean credit history is one of the strongest factors in approval.</li>
+    <li>Adding a co-applicant's income can raise total household income.</li>
+    <li>Requesting a smaller loan amount relative to income can help.</li>
+  </ul>
+  <p class="disclaimer">This is guidance from the model's general patterns, not a guarantee.</p>
+</div>
+{% endif %}
+
+<a href="{{ url_for('index') }}" class="btn btn-secondary">Check another application</a>
+{% endblock %}

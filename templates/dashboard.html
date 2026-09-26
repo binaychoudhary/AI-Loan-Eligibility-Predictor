@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Model Dashboard &mdash; Loan Eligibility Predictor{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Model performance dashboard</h1>
+  <p class="hero-sub">
+    Actual evaluation results from training and comparing Logistic Regression,
+    Decision Tree, and Random Forest on the loan applicant dataset.
+  </p>
+</section>
+
+{% if errors %}
+<div class="alert alert-error" role="alert">
+  <ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+
+{% if metrics %}
+<div class="card">
+  <h2>Best performing model</h2>
+  <p class="best-model-callout">
+    <strong>{{ metrics.best_model }}</strong> was selected for deployment,
+    based on the highest test-set {{ metrics.selection_metric.replace('_', ' ') }}.
+  </p>
+  <p class="dataset-note">
+    Trained on {{ metrics.train_set_size }} applications, evaluated on
+    {{ metrics.test_set_size }} held-out applications
+    ({{ metrics.class_distribution['Approved (Y)'] }} approved /
+    {{ metrics.class_distribution['Rejected (N)'] }} rejected in the full dataset).
+  </p>
+</div>
+
+<div class="card">
+  <h2>Metric comparison</h2>
+  <div class="table-scroll">
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Accuracy</th>
+          <th>Precision</th>
+          <th>Recall</th>
+          <th>F1-score</th>
+          <th>CV Accuracy (mean ± std)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for model_name, r in metrics.results.items() %}
+        <tr class="{{ 'is-best' if model_name == metrics.best_model }}">
+          <td>{{ model_name }}</td>
+          <td>{{ '%.2f'|format(r.accuracy * 100) }}%</td>
+          <td>{{ '%.2f'|format(r.precision * 100) }}%</td>
+          <td>{{ '%.2f'|format(r.recall * 100) }}%</td>
+          <td>{{ '%.2f'|format(r.f1_score * 100) }}%</td>
+          <td>{{ '%.2f'|format(r.cv_accuracy_mean * 100) }}% ± {{ '%.2f'|format(r.cv_accuracy_std * 100) }}%</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <img class="chart-img" src="{{ url_for('static', filename='images/dashboard/metrics_comparison.png') }}" alt="Bar chart comparing accuracy, precision, recall and F1-score across the three models" />
+</div>
+
+<div class="card">
+  <h2>Confusion matrices</h2>
+  <div class="image-grid">
+    {% for model_name in metrics.results.keys() %}
+    <figure>
+      <img src="{{ url_for('static', filename='images/dashboard/confusion_' + model_name.lower().replace(' ', '_') + '.png') }}" alt="Confusion matrix for {{ model_name }}" />
+      <figcaption>{{ model_name }}</figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="card">
+  <h2>Exploratory data analysis</h2>
+  <div class="image-grid">
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/loan_status_distribution.png') }}" alt="Loan approval distribution" />
+      <figcaption>Loan approval distribution</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/income_distribution.png') }}" alt="Applicant income distribution" />
+      <figcaption>Applicant income distribution</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/loan_amount_distribution.png') }}" alt="Loan amount distribution" />
+      <figcaption>Loan amount distribution</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/credit_history_vs_status.png') }}" alt="Credit history versus loan status" />
+      <figcaption>Credit history vs loan status</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/education_vs_status.png') }}" alt="Education versus loan status" />
+      <figcaption>Education vs loan status</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/property_area_vs_status.png') }}" alt="Property area versus loan status" />
+      <figcaption>Property area vs loan status</figcaption>
+    </figure>
+    <figure>
+      <img src="{{ url_for('static', filename='images/eda/correlation_heatmap.png') }}" alt="Correlation heatmap of numeric features" />
+      <figcaption>Correlation analysis</figcaption>
+    </figure>
+  </div>
+</div>
+{% endblock %}

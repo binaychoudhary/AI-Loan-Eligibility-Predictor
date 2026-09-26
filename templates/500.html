@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Something went wrong{% endblock %}
+{% block content %}
+<section class="error-page">
+  <h1>500</h1>
+  <p>Something went wrong on our end while processing that request.</p>
+  <a href="{{ url_for('index') }}" class="btn btn-primary">Back to eligibility check</a>
+</section>
+{% endblock %}
