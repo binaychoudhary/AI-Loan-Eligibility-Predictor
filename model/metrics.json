@@ -1,35 +1,35 @@
 {
   "results": {
     "Logistic Regression": {
-      "accuracy": 0.8699,
-      "precision": 0.8485,
+      "accuracy": 0.8618,
+      "precision": 0.84,
       "recall": 0.9882,
-      "f1_score": 0.913,
-      "cv_accuracy_mean": 0.7963,
-      "cv_accuracy_std": 0.0421
+      "f1_score": 0.9081,
+      "cv_accuracy_mean": 0.7962,
+      "cv_accuracy_std": 0.0436
     },
     "Decision Tree": {
-      "accuracy": 0.813,
-      "precision": 0.8229,
+      "accuracy": 0.8374,
+      "precision": 0.8495,
       "recall": 0.9294,
-      "f1_score": 0.8729,
-      "cv_accuracy_mean": 0.7413,
-      "cv_accuracy_std": 0.038
+      "f1_score": 0.8876,
+      "cv_accuracy_mean": 0.7555,
+      "cv_accuracy_std": 0.0507
     },
     "Random Forest": {
-      "accuracy": 0.8537,
-      "precision": 0.8384,
-      "recall": 0.9765,
-      "f1_score": 0.9022,
-      "cv_accuracy_mean": 0.7901,
-      "cv_accuracy_std": 0.0394
+      "accuracy": 0.8618,
+      "precision": 0.8542,
+      "recall": 0.9647,
+      "f1_score": 0.9061,
+      "cv_accuracy_mean": 0.7963,
+      "cv_accuracy_std": 0.0416
     }
   },
   "confusion_matrices": {
     "Logistic Regression": [
       [
-        23,
-        15
+        22,
+        16
       ],
       [
         1,
@@ -38,8 +38,8 @@
     ],
     "Decision Tree": [
       [
-        21,
-        17
+        24,
+        14
       ],
       [
         6,
@@ -48,12 +48,12 @@
     ],
     "Random Forest": [
       [
-        22,
-        16
+        24,
+        14
       ],
       [
-        2,
-        83
+        3,
+        82
       ]
     ]
   },
